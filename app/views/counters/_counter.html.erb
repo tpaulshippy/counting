@@ -8,10 +8,15 @@
     <strong class="block font-medium mb-1">Number:</strong>
     <%= counter.number %>
   </p>
+  <%= form_with(model: counter, class: "contents") do |form| %>
+    <%= form.submit "Up", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit "Down", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit "Reset", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  <% end %>
 
   <% if action_name != "show" %>
-    <%= link_to "Show this counter", counter, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this counter", edit_counter_path(counter), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Show this counter", counter, class: "hidden rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this counter", edit_counter_path(counter), class: "hidden rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <hr class="mt-6">
   <% end %>
 </div>
