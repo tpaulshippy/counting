@@ -45,4 +45,25 @@ class CountersControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to counters_url
   end
+
+  test "should add 1 to counter" do
+    patch counter_url(@counter), params: { commit: "Up" }
+    @counter.reload
+    assert @counter.number == 1
+    assert_redirected_to counters_url
+  end
+
+  test "should subtract 1 from counter" do
+    patch counter_url(@counter), params: { commit: "Down" }
+    @counter.reload
+    assert @counter.number == -1
+    assert_redirected_to counters_url
+  end
+
+  test "should reset counter" do
+    patch counter_url(@counter), params: { commit: "Reset" }
+    @counter.reload
+    assert @counter.number == 0
+    assert_redirected_to counters_url
+  end
 end

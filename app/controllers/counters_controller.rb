@@ -36,6 +36,19 @@ class CountersController < ApplicationController
 
   # PATCH/PUT /counters/1 or /counters/1.json
   def update
+    if params[:commit] == "Up"
+      @counter.up
+      redirect_to counters_url 
+      return
+    elsif params[:commit] == "Down"
+      @counter.down
+      redirect_to counters_url 
+      return
+    elsif params[:commit] == "Reset"
+      @counter.reset
+      redirect_to counters_url 
+      return
+    end
     respond_to do |format|
       if @counter.update(counter_params)
         format.html { redirect_to counter_url(@counter), notice: "Counter was successfully updated." }
