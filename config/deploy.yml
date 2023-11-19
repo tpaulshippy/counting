@@ -6,7 +6,7 @@ image: pshippy/counting
 
 # Deploy to these servers.
 servers:
-  - 192.168.1.176
+  - 172.16.37.128
 
 # Credentials for your image host.
 registry:
