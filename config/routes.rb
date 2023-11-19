@@ -4,4 +4,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/") to the "home#index" controller action
   root "home#index"
+
+  get "up" => "rails/health#show"
 end
