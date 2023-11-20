@@ -1,4 +1,8 @@
 class Counter < ApplicationRecord
+    # after_update_commit { broadcast_replace_to "counters" }
+    broadcasts_to ->(counter) { :counters }
+
+
     def up
         self.number += 1
         self.save
