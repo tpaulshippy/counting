@@ -67,4 +67,8 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Read REMOTE_HOST from the environment
+  config.hosts << ENV["REMOTE_HOST"] if ENV["REMOTE_HOST"].present?
+
 end
