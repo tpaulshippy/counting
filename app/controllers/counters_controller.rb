@@ -1,9 +1,9 @@
 class CountersController < ApplicationController
   before_action :set_counter, only: %i[ show edit update destroy ]
-
+  before_action :authenticate_user!
   # GET /counters or /counters.json
   def index
-    @counters = Counter.all
+    @counters = Counter.where(user_id: current_user.id)
   end
 
   # GET /counters/1 or /counters/1.json
@@ -22,6 +22,7 @@ class CountersController < ApplicationController
   # POST /counters or /counters.json
   def create
     @counter = Counter.new(counter_params)
+    @counter.user_id = current_user.id
 
     respond_to do |format|
       if @counter.save
@@ -73,7 +74,8 @@ class CountersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_counter
-      @counter = Counter.find(params[:id])
+      @counter = Counter.where(user_id: current_user.id)
+                        .find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

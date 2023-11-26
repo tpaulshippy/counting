@@ -1,7 +1,6 @@
 class Counter < ApplicationRecord
     broadcasts_to ->(counter) { :counters }
 
-
     def up
         self.number += 1
         self.save
@@ -16,4 +15,5 @@ class Counter < ApplicationRecord
         self.number = 0
         self.save
     end
+
 end
