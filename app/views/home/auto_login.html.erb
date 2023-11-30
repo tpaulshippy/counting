@@ -1,0 +1,11 @@
+<%= button_to 'Sign in with Google', '/users/auth/google_oauth2', style: 'display:none'  %>
+<script type="text/javascript">
+    function submitForm() {
+        document.forms[0].submit();
+    }
+    // Submit the form on load
+    window.addEventListener("load", (event) => {
+        submitForm();
+    });
+
+</script>

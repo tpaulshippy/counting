@@ -1,6 +1,6 @@
 class CountersController < ApplicationController
   before_action :set_counter, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!
+
   # GET /counters or /counters.json
   def index
     @counters = Counter.where(user_id: current_user.id)
