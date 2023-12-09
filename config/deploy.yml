@@ -6,7 +6,7 @@ image: pshippy/counting
 
 # Deploy to these servers.
 servers:
-  - 172.16.37.128
+  - 192.168.1.203
 
 # Credentials for your image host.
 registry:
@@ -31,6 +31,11 @@ registry:
 #   user: app
 
 # Configure builder setup.
+builder:
+  remote:
+    arch: arm/v7
+    host: ssh://root@192.168.0.203
+
 # builder:
 #   args:
 #     RUBY_VERSION: 3.2.0
