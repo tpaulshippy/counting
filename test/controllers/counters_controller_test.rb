@@ -9,11 +9,28 @@ class CountersControllerTest < ActionDispatch::IntegrationTest
 
     @counter = counters(:one)
     @counter.user_id = user.id
+
+    user2 = users(:two)
+    user2.password = user2.encrypted_password
+    user2.save
+
+    @counter2 = counters(:two)
+    @counter2.user_id = user2.id
+
+    @shared_counter = counters(:shared)
+    @shared_counter.user_id = user2.id
+    @shared_counter.users << user
   end
 
   test "should get index" do
+    @counter.save
+    @counter2.save
+    @shared_counter.save
     get counters_url
     assert_response :success
+    assert_match "Counter1", @response.body
+    assert_match "CounterShared", @response.body
+    refute_match "Counter2", @response.body
   end
 
   test "should get new" do
@@ -32,6 +49,20 @@ class CountersControllerTest < ActionDispatch::IntegrationTest
   test "should show counter" do
     @counter.save
     get counter_url(@counter)
+    assert_response :success
+  end
+
+  
+  test "should not show other user's counter" do
+    @counter2.save
+    get counter_url(@counter2)
+    assert_response :not_found
+  end
+
+
+  test "should show shared counter" do
+    @shared_counter.save
+    get counter_url(@shared_counter)
     assert_response :success
   end
 

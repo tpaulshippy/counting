@@ -1,6 +1,9 @@
 class Counter < ApplicationRecord
     has_many :history, dependent: :destroy
 
+    has_one :user
+    has_and_belongs_to_many :users
+
     broadcasts_to ->(counter) { :counters }
 
     def up

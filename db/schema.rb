@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_10_035410) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_10_040750) do
   create_table "counters", force: :cascade do |t|
     t.string "name"
     t.integer "number"
@@ -18,6 +18,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_035410) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["user_id"], name: "index_counters_on_user_id"
+  end
+
+  create_table "counters_users", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "counter_id", null: false
   end
 
   create_table "histories", force: :cascade do |t|

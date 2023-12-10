@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Counter1
   number: 0
 
 two:
-  name: MyString
+  name: Counter2
+  number: 0
+
+shared:
+  name: CounterShared
   number: 0

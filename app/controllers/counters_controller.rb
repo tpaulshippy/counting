@@ -3,11 +3,14 @@ class CountersController < ApplicationController
 
   # GET /counters or /counters.json
   def index
-    @counters = Counter.where(user_id: current_user.id)
+    set_counters
   end
 
   # GET /counters/1 or /counters/1.json
   def show
+    if @counter.nil?
+      render plain: "Not found", status: :not_found
+    end
   end
 
   # GET /counters/new
@@ -72,14 +75,21 @@ class CountersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_counter
-      @counter = Counter.where(user_id: current_user.id)
-                        .find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def counter_params
-      params.require(:counter).permit(:name, :number)
-    end
+  def set_counters
+    @counters = Counter.left_joins(:users)
+                .where("counters.user_id = :user_id OR users.id = :user_id", user_id: current_user.id)
+
+  end
+
+  def set_counter
+    set_counters
+    @counter = @counters.find_by(id: params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def counter_params
+    params.require(:counter).permit(:name, :number)
+  end
+
 end
