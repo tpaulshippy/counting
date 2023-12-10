@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_26_000838) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_10_035410) do
   create_table "counters", force: :cascade do |t|
     t.string "name"
     t.integer "number"
@@ -18,6 +18,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_000838) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["user_id"], name: "index_counters_on_user_id"
+  end
+
+  create_table "histories", force: :cascade do |t|
+    t.integer "counter_id", null: false
+    t.integer "change"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["counter_id"], name: "index_histories_on_counter_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,4 +43,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_000838) do
   end
 
   add_foreign_key "counters", "users"
+  add_foreign_key "histories", "counters"
 end
