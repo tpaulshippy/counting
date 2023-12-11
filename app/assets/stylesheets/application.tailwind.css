@@ -11,3 +11,32 @@
 }
 
 */
+[type=button],[type=reset],[type=submit],button {
+  background-color: blue;
+}
+
+[type=button],[type=reset],[type=submit],button,
+.button,
+.button:visited {
+  display: inline;
+  padding: 0.75em 1.5em;
+  margin: 0 0 var(--space-m);
+  background: var(--color-tint);
+  font-size: var(--type-m);
+  text-align: center;
+  line-height: 1.25;
+  border: 0;
+  border-radius: 0.5em;
+  text-decoration: none;
+}
+
+.button:hover,
+.button:active {
+  background: var(--color-tint-alt);
+}
+
+@media (min-width: 45em) {
+  button {
+    width: auto;
+  }
+}
