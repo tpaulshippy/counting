@@ -1,11 +1,9 @@
 <div id="<%= dom_id counter %>">
   <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
     <%= link_to counter.name, counter %>
   </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Number:</strong>
+  <p class="my-5 text-8xl">
     <%= counter.number %>
   </p>
   <%= form_with(model: counter, class: "contents") do |form| %>
