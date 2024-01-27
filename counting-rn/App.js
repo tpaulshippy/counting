@@ -1,20 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import CountersList from './components/CountersList';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text style={styles.title}>Counters</Text>
       <StatusBar style="auto" />
+      <CountersList />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    padding: 20,
+    color: '#fff',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#000',
+    alignItems: 'left',
+    justifyContent: 'center',    
   },
 });
