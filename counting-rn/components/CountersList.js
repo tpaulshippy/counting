@@ -18,7 +18,12 @@ export default function CountersList() {
     useEffect(() => {
         async function init() {
             const data = await fetchData();
-            setCounters(data);
+            if (data.error)
+                console.error(data.error);
+            else {
+                setCounters(data);
+            }
+            
         }
         init();
     }, []);
