@@ -10,17 +10,19 @@ export default function CountersList() {
 
     const onRefresh = async () => {
         setRefreshing(true);
-        const data = await fetchData();
+        const response = await fetchData("/counters.json", "GET");
+        const data = await response.json();
         setCounters(data);
         setRefreshing(false);
     };
 
     useEffect(() => {
         async function init() {
-            const data = await fetchData();
-            if (data.error)
-                console.error(data.error);
+            const response = await fetchData("/counters.json", "GET");
+            if (response.error)
+                console.error(response.error);
             else {
+                const data = await response.json();
                 setCounters(data);
             }
             

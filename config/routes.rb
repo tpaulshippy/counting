@@ -16,4 +16,6 @@ Rails.application.routes.draw do
       root "counters#index"
     end
   end
+
+  post "sessions/create" => "sessions#create"
 end

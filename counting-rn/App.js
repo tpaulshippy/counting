@@ -1,13 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import CountersList from './components/CountersList';
+import Login from './Login';
+import { useEffect, useState } from 'react';
+import { getCookie } from './client';
 
 export default function App() {
+  const [view, setView] = useState('login');
+  const showCounters = () => {
+    setView('counters');
+  };
+  useEffect(() => {
+    if (getCookie() !== '') {
+      showCounters();
+    }
+  });
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Counters</Text>
       <StatusBar style="auto" />
-      <CountersList />
+      {view === 'counters' ? <CountersList /> : <Login onLogin={showCounters} />}
     </View>
   );
 }
@@ -23,6 +35,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
     alignItems: 'left',
-    justifyContent: 'center',    
+    justifyContent: 'center',
   },
 });
