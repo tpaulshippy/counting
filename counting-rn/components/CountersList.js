@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { fetchData } from '../client';
+import { fetchData, openSocket } from '../client';
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 
@@ -16,6 +16,27 @@ export default function CountersList() {
         setRefreshing(false);
     };
 
+    const refreshStream = () => {
+        openSocket((event) => {
+            const data = JSON.parse(event.data);
+            
+            if (data.message && typeof data.message == 'string') {
+                let json = data.message.substring(data.message.indexOf("<template>")+10);
+                json = json.substring(0, json.indexOf("</template>"));
+                json = json.replace(/&quot;/g, '"');
+                json = JSON.parse(json);
+                
+                const newCounters = counters.map((counter) => {
+                    if (counter.id === json.id) {
+                        counter.number = json.number;
+                    }
+                    return counter;
+                });
+                setCounters(newCounters);
+            }
+        });
+    }
+
     useEffect(() => {
         async function init() {
             const response = await fetchData("/counters.json", "GET");
@@ -24,6 +45,7 @@ export default function CountersList() {
             else {
                 const data = await response.json();
                 setCounters(data);
+                // refreshStream();
             }
             
         }
@@ -35,6 +57,7 @@ export default function CountersList() {
             contentContainerStyle={styles.scrollViewContent}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
+            <Button title="Open Stream" onPress={refreshStream} />
             {counters.map((counter) => (
                 <View style={styles.counterContainer} key={counter.id}>
                     <Text style={styles.name}>{counter.name}</Text>

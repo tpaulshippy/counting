@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import React, { useState } from 'react';
-import { fetchData, setCookie } from './client';
+import { fetchData, setCookie, setStream } from './client';
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState('');
@@ -15,8 +15,13 @@ export default function Login({ onLogin }) {
         console.log('Logged in');
         // hold the cookie for future requests
         cookie = response.headers.map['set-cookie'];
-        setCookie(cookie);
-        onLogin();
+        return response.json().then((data) => {
+          const stream = data.stream;
+          setCookie(cookie);
+          setStream(stream);
+
+          onLogin();
+        });
       }
       else if (response.status === 401) {
         console.error('Login failed');

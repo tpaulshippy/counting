@@ -6,6 +6,12 @@ class Counter < ApplicationRecord
 
     broadcasts_to ->(counter) { :counters }
 
+    after_update_commit :update_clients
+
+    def update_clients
+        broadcast_replace_to "counters_json", template: "counters/_counter_data"
+    end
+
     def up(user_id)
         self.number += 1
         self.save

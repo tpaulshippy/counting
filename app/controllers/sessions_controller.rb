@@ -9,7 +9,8 @@ class SessionsController < ApplicationController
 
         if resource.valid_password?(params[:password])
             sign_in("user", resource)
-            render json: { success: true }
+            signed_stream_name = Turbo::StreamsChannel.signed_stream_name("counters_json")
+            render json: { success: true, stream: signed_stream_name }
             return
         end
         return head :unauthorized
