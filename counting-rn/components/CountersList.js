@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { fetchData, openSocket } from '../client';
+import { fetchData, openSocket, setCookie, setStream } from '../client';
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 
@@ -12,8 +12,10 @@ export default function CountersList() {
         setRefreshing(true);
         const response = await fetchData("/counters.json", "GET");
         const data = await response.json();
+        console.log("Data returned from refresh", data);
         setCounters(data);
         setRefreshing(false);
+        refreshStream();
     };
 
     const refreshStream = () => {
@@ -25,7 +27,12 @@ export default function CountersList() {
                 json = json.substring(0, json.indexOf("</template>"));
                 json = json.replace(/&quot;/g, '"');
                 json = JSON.parse(json);
-                
+
+                console.log("Data returned from stream", json);
+                if (counters.length === 0) {
+                    console.error("No counters to update");
+                    return;
+                }
                 const newCounters = counters.map((counter) => {
                     if (counter.id === json.id) {
                         counter.number = json.number;
@@ -44,32 +51,46 @@ export default function CountersList() {
                 console.error(response.error);
             else {
                 const data = await response.json();
+                console.log("Data returned from init", data);
+                if (data.error) {
+                    console.error(data.error);
+                    setCookie(null);
+                    setStream(null);
+                }
                 setCounters(data);
-                // refreshStream();
+                refreshStream();
             }
             
         }
         init();
     }, []);
 
+    const pressButton = (id, button) => {
+        fetchData(`/counters/${id}.json`, "PUT",
+        {
+            "commit": button
+        }).then((response) => {;
+            console.log(response);
+        });
+    }
+
     return (
         <ScrollView
             contentContainerStyle={styles.scrollViewContent}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
-            <Button title="Open Stream" onPress={refreshStream} />
-            {counters.map((counter) => (
+            {counters.map ? counters.map((counter) => (
                 <View style={styles.counterContainer} key={counter.id}>
                     <Text style={styles.name}>{counter.name}</Text>
                     <Text style={styles.number}>{counter.number}</Text>
 
                     <View style={styles.buttonContainer}>
-                        <Button title="Up" />
-                        <Button title="Down" />
-                        <Button title="Reset" />
+                        <Button title="Up" onPress={() => pressButton(counter.id, "Up")} />
+                        <Button title="Down" onPress={() => pressButton(counter.id, "Down")} />
+                        <Button title="Reset" onPress={() => pressButton(counter.id, "Reset")} />
                     </View>
                 </View>
-            ))}
+            )) : null}
         </ScrollView>
     );
 }

@@ -11,8 +11,12 @@ export default function App() {
     setView('counters');
   };
   useEffect(() => {
-    if (getCookie() !== '') {
+    const cookie = getCookie();
+    if (cookie !== '') {
       showCounters();
+    }
+    else {
+      setView('login');
     }
   });
   return (
