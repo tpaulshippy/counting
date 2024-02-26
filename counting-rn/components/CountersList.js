@@ -26,6 +26,10 @@ export default function CountersList() {
                 json = json.replace(/&quot;/g, '"');
                 json = JSON.parse(json);
                 
+                if (counters.length == 0) {
+                    return;
+                }
+
                 const newCounters = counters.map((counter) => {
                     if (counter.id === json.id) {
                         counter.number = json.number;
@@ -45,7 +49,7 @@ export default function CountersList() {
             else {
                 const data = await response.json();
                 setCounters(data);
-                // refreshStream();
+                refreshStream();
             }
             
         }
@@ -57,7 +61,6 @@ export default function CountersList() {
             contentContainerStyle={styles.scrollViewContent}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
-            <Button title="Open Stream" onPress={refreshStream} />
             {counters.map((counter) => (
                 <View style={styles.counterContainer} key={counter.id}>
                     <Text style={styles.name}>{counter.name}</Text>
