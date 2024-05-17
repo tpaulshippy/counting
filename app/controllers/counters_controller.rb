@@ -15,7 +15,7 @@ class CountersController < ApplicationController
 
   # GET /counters/new
   def new
-    @counter = Counter.new
+    @counter = Counter.new(number: 0)
   end
 
   # GET /counters/1/edit
@@ -29,7 +29,7 @@ class CountersController < ApplicationController
 
     respond_to do |format|
       if @counter.save
-        format.html { redirect_to counter_url(@counter), notice: "Counter was successfully created." }
+        format.html { redirect_to counters_url, notice: "Counter was successfully created." }
         format.json { render :show, status: :created, location: @counter }
       else
         format.html { render :new, status: :unprocessable_entity }
