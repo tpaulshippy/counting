@@ -15,7 +15,11 @@
   </turbo-frame>
 
   <div id="counters" class="min-w-full">
-    <%= render @counters %>
+    <% @counters.each do |counter| %>
+    <turbo-frame id="<%= dom_id counter %>_frame">
+      <%= render counter %>
+    </turbo-frame>
+    <% end %>
   </div>
 </div>
 <%= turbo_stream_from :counters %>

@@ -55,7 +55,7 @@ class CountersController < ApplicationController
     end
     respond_to do |format|
       if @counter.update(counter_params)
-        format.html { redirect_to counter_url(@counter), notice: "Counter was successfully updated." }
+        format.html { redirect_to counters_url, notice: "Counter was successfully updated." }
         format.json { render :show, status: :ok, location: @counter }
       else
         format.html { render :edit, status: :unprocessable_entity }
