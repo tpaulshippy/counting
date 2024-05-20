@@ -42,15 +42,15 @@ class CountersController < ApplicationController
   def update
     if params[:commit] == "Up"
       @counter.up(current_user.id)
-      redirect_to counters_url 
+      head :ok
       return
     elsif params[:commit] == "Down"
       @counter.down(current_user.id)
-      redirect_to counters_url 
+      head :ok
       return
     elsif params[:commit] == "Reset"
       @counter.reset(current_user.id)
-      redirect_to counters_url 
+      head :ok
       return
     end
     respond_to do |format|
