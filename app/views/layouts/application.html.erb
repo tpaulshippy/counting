@@ -13,8 +13,14 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-2 px-5 flex flex-col">
+    <main class="mx-10 mt-2 px-5 flex flex-row" data-controller="resizable">
+      <section id="main" data-resizable-target="resizable" style="min-width: 333px">
       <%= yield %>
+      </section>
+      <section class="bg-sky-100 flex-row flex text-black flex-grow">
+        <div data-resizable-target="handle" class="w-4 h-full block bg-slate-500 absolute cursor-ew-resize"></div>
+        <div class="p-5 max-w-xs">Context</div>
+      </section>
     </main>
   </body>
 </html>
