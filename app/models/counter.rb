@@ -9,24 +9,23 @@ class Counter < ApplicationRecord
 
 
     def up(user_id)
-        self.number += 1
-        self.save
+        increment!(:number)
+        save
 
-        self.history.create(change: 1, created_by: user_id)
+        history.create(change: 1, created_by: user_id)
     end
 
     def down(user_id)
-        self.number -= 1
-        self.save
+        decrement!(:number)
+        save
 
-        self.history.create(change: -1, created_by: user_id)
+        history.create(change: -1, created_by: user_id)
     end
 
     def reset(user_id)
-        self.number = 0
-        self.save
+        update(number: 0)
 
-        self.history.create(change: 0, created_by: user_id)
+        history.create(change: 0, created_by: user_id)
     end
 
 end

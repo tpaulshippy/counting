@@ -43,7 +43,7 @@ class CountersControllerTest < ActionDispatch::IntegrationTest
       post counters_url, params: { counter: { name: @counter.name, number: @counter.number } }
     end
 
-    assert_redirected_to counter_url(Counter.last)
+    assert_redirected_to counters_url
   end
 
   test "should show counter" do
@@ -75,7 +75,7 @@ class CountersControllerTest < ActionDispatch::IntegrationTest
   test "should update counter" do
     @counter.save
     patch counter_url(@counter), params: { counter: { name: @counter.name, number: @counter.number } }
-    assert_redirected_to counter_url(@counter)
+    assert_redirected_to counters_url
   end
 
   test "should destroy counter" do
@@ -92,7 +92,7 @@ class CountersControllerTest < ActionDispatch::IntegrationTest
     patch counter_url(@counter), params: { commit: "Up" }
     @counter.reload
     assert @counter.number == 1
-    assert_redirected_to counters_url
+    assert_response :success
   end
 
   test "should subtract 1 from counter" do
@@ -100,7 +100,7 @@ class CountersControllerTest < ActionDispatch::IntegrationTest
     patch counter_url(@counter), params: { commit: "Down" }
     @counter.reload
     assert @counter.number == -1
-    assert_redirected_to counters_url
+    assert_response :success
   end
 
   test "should reset counter" do
@@ -108,6 +108,6 @@ class CountersControllerTest < ActionDispatch::IntegrationTest
     patch counter_url(@counter), params: { commit: "Reset" }
     @counter.reload
     assert @counter.number == 0
-    assert_redirected_to counters_url
+    assert_response :success
   end
 end
