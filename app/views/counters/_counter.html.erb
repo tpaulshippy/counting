@@ -16,5 +16,20 @@
     <%= link_to "Show this counter", counter, class: "hidden rounded-lg py-3 px-5 inline-block font-medium" %>
     <%= link_to "Edit this counter", edit_counter_path(counter), class: "hidden rounded-lg py-3 ml-2 px-5 inline-block font-medium" %>
     <hr class="mt-6">
+  <% else %>
+
+<% counters = Counter.left_joins(:users)
+                       .where('counters.user_id = :user_id OR users.id = :user_id', user_id: current_user.id) %>
+     <% counters.each do |counter| %>
+    <div>
+        <h2 class="mt-6">History of <%= counter.name %></h2>
+        <ul>
+        <% counter.history.reverse.each do |history| %>
+            <li>
+            <%= history.change %> at <%= history.created_at %>
+            </li>
+        <% end %>
+    </div>
+    <% end %>
   <% end %>
 </div>
