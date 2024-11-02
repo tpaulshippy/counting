@@ -1,0 +1,17 @@
+<% counters = Counter.all %>
+<turbo-stream action="update" target="history">
+  <template>
+    <% counters.each do |counter| %>
+    <div>
+        <h2 class="mt-6">History of <%= counter.name %></h2>
+        <ul>
+        <% counter.history.reverse.each do |history| %>
+            <li>
+            <%= history.change %> at <%= history.created_at %>
+            </li>
+        <% end %>
+    </div>
+    <% end %>
+  </template>
+</turbo-stream>
+

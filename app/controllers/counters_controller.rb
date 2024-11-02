@@ -44,25 +44,13 @@ class CountersController < ApplicationController
     case params[:commit]
     when 'Up'
       @counter.up(current_user.id)
-      head :ok
-      return
     when 'Down'
       @counter.down(current_user.id)
-      head :ok
-      return
     when 'Reset'
       @counter.reset(current_user.id)
-      head :ok
-      return
     end
     respond_to do |format|
-      if @counter.update(counter_params)
-        format.html { redirect_to counters_url, notice: 'Counter was successfully updated.' }
-        format.json { render :show, status: :ok, location: @counter }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @counter.errors, status: :unprocessable_entity }
-      end
+      format.turbo_stream { render }
     end
   end
 
