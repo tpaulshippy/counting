@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class HomeController < ApplicationController
-    skip_before_action :authenticate_user!, only: :auto_login
+  skip_before_action :authenticate_user!, only: :auto_login
 
-    def index
-        render
-    end
+  def index
+    render
+  end
 
-    def auto_login
-        render
-    end
+  def auto_login
+    render
+  end
 end

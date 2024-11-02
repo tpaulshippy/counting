@@ -1,5 +1,7 @@
-require "minitest/autorun"
-require "minitest/spec"
+# frozen_string_literal: true
 
-describe "History" do
+require 'minitest/autorun'
+require 'minitest/spec'
+
+describe 'History' do
 end

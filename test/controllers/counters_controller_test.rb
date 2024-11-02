@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class CountersControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -22,92 +24,90 @@ class CountersControllerTest < ActionDispatch::IntegrationTest
     @shared_counter.users << user
   end
 
-  test "should get index" do
+  test 'should get index' do
     @counter.save
     @counter2.save
     @shared_counter.save
     get counters_url
     assert_response :success
-    assert_match "Counter1", @response.body
-    assert_match "CounterShared", @response.body
-    refute_match "Counter2", @response.body
+    assert_match 'Counter1', @response.body
+    assert_match 'CounterShared', @response.body
+    refute_match 'Counter2', @response.body
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_counter_url
     assert_response :success
   end
 
-  test "should create counter" do
-    assert_difference("Counter.count") do
+  test 'should create counter' do
+    assert_difference('Counter.count') do
       post counters_url, params: { counter: { name: @counter.name, number: @counter.number } }
     end
 
     assert_redirected_to counters_url
   end
 
-  test "should show counter" do
+  test 'should show counter' do
     @counter.save
     get counter_url(@counter)
     assert_response :success
   end
 
-  
   test "should not show other user's counter" do
     @counter2.save
     get counter_url(@counter2)
     assert_response :not_found
   end
 
-
-  test "should show shared counter" do
+  test 'should show shared counter' do
     @shared_counter.save
     get counter_url(@shared_counter)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     @counter.save
     get edit_counter_url(@counter)
     assert_response :success
   end
 
-  test "should update counter" do
+  test 'should update counter' do
     @counter.save
     patch counter_url(@counter), params: { counter: { name: @counter.name, number: @counter.number } }
     assert_redirected_to counters_url
   end
 
-  test "should destroy counter" do
+  test 'should destroy counter' do
     @counter.save
-    assert_difference("Counter.count", -1) do
+    assert_difference('Counter.count', -1) do
       delete counter_url(@counter)
     end
 
     assert_redirected_to counters_url
   end
 
-  test "should add 1 to counter" do
+  test 'should add 1 to counter' do
     @counter.save
-    patch counter_url(@counter), params: { commit: "Up" }
+    patch counter_url(@counter), params: { commit: 'Up' }
     @counter.reload
     assert @counter.number == 1
     assert_response :success
   end
 
-  test "should subtract 1 from counter" do
+  test 'should subtract 1 from counter' do
     @counter.save
-    patch counter_url(@counter), params: { commit: "Down" }
+    patch counter_url(@counter), params: { commit: 'Down' }
     @counter.reload
     assert @counter.number == -1
     assert_response :success
   end
 
-  test "should reset counter" do
+  test 'should reset counter' do
     @counter.save
-    patch counter_url(@counter), params: { commit: "Reset" }
+    patch counter_url(@counter), params: { commit: 'Reset' }
     @counter.reload
-    assert @counter.number == 0
+    assert @counter.number.zero?
     assert_response :success
   end
 end
