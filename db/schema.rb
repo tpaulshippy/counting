@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_10_045647) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_08_201901) do
   create_table "counters", force: :cascade do |t|
     t.string "name"
     t.integer "number"
@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_045647) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "created_by"
+    t.string "comment"
     t.index ["counter_id"], name: "index_histories_on_counter_id"
   end
 
