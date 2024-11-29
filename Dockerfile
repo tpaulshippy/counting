@@ -11,4 +11,4 @@ ENV PORT=3000
 EXPOSE $PORT
 
 # Configure the main process to run when running the image
-CMD ["rails", "server", "-b", "0.0.0.0", "-p", "$PORT"]
+CMD rails server -b 0.0.0.0 -p $PORT
