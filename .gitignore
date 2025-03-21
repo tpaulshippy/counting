@@ -38,3 +38,6 @@
 !/app/assets/builds/.keep
 
 .env
+.aider*
+.DS_Store
+
