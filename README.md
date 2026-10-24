@@ -1,24 +1,28 @@
-# README
+# Counting
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Shared counters with history. Rails web app + Expo React Native client.
 
-Things you may want to cover:
+* Web: Rails 8.1, Ruby 3.2.1, SQLite, Hotwire (Turbo broadcasts), Tailwind, Devise + Google OAuth
+* Mobile: `counting-rn/` (Expo ~50, React Native 0.73)
 
-* Ruby version
+## What it does
 
-* System dependencies
+* `Counter` with `up` / `down` / `reset`, per-change `History` entries (`change`, `comment`, `created_by`) — `app/models/counter.rb:11`
+* Authenticated root at `counters#index`, unauthenticated root at `home#auto_login` — `config/routes.rb:13`
+* Live updates via `broadcasts_to :counters`
 
-* Configuration
+## Run
 
-* Database creation
+```sh
+bundle install
+bin/rails db:setup
+bin/dev
+```
 
-* Database initialization
+Mobile:
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```sh
+cd counting-rn
+npm install
+npm start
+```
