@@ -79,5 +79,5 @@ end
 gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
-gem 'tailwindcss-rails', '~> 4.0'
 gem 'rack-cors'
+gem 'tailwindcss-rails', '~> 4.0'

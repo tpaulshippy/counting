@@ -25,8 +25,7 @@ class CountersController < ApplicationController
 
   # POST /counters or /counters.json
   def create
-    @counter = Counter.new(counter_params)
-    @counter.user_id = current_user.id
+    @counter = build_counter
 
     respond_to do |format|
       if @counter.save
@@ -41,20 +40,8 @@ class CountersController < ApplicationController
 
   # PATCH/PUT /counters/1 or /counters/1.json
   def update
-    case params[:commit]
-    when 'Up'
-      @counter.up(current_user.id)
-      head :ok
-      return
-    when 'Down'
-      @counter.down(current_user.id)
-      head :ok
-      return
-    when 'Reset'
-      @counter.reset(current_user.id)
-      head :ok
-      return
-    end
+    return if handle_counter_button
+
     respond_to do |format|
       if @counter.update(counter_params)
         format.html { redirect_to counters_url, notice: 'Counter was successfully updated.' }
@@ -77,6 +64,19 @@ class CountersController < ApplicationController
   end
 
   private
+
+  def build_counter
+    Counter.new(counter_params).tap { |counter| counter.user_id = current_user.id }
+  end
+
+  def handle_counter_button
+    action = params[:commit]
+    return false unless %w[Up Down Reset].include?(action)
+
+    @counter.public_send(action.downcase, current_user.id)
+    head :ok
+    true
+  end
 
   def set_counters
     @counters = Counter.left_joins(:users)

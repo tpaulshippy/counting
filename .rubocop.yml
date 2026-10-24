@@ -1,0 +1,32 @@
+AllCops:
+  NewCops: disable
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'counting-rn/**/*'
+    - 'storage/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: single_quotes
+
+Metrics/BlockLength:
+  Exclude:
+    - 'test/**/*'
+    - 'config/routes.rb'
+    - 'config/environments/*.rb'
+    - 'db/seeds.rb'
+
+Layout/LineLength:
+  Exclude:
+    - 'config/initializers/devise.rb'
