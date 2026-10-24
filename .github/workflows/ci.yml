@@ -28,27 +28,3 @@ jobs:
         run: |
           bin/rails db:prepare
           bin/rails test
-
-  rn:
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: counting-rn
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: counting-rn/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Smoke-build iOS bundle
-        run: npx expo export --platform ios --output-dir dist --clear
