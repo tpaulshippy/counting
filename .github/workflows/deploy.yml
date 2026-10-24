@@ -39,7 +39,9 @@ jobs:
           cd /home/counting/repo
           git pull --ff-only
           bundle install
-          RAILS_ENV=production bundle exec rails db:migrate
+          # NOTE: the service runs without RAILS_ENV (development env/DB);
+          # keep migrate on the same env or it will miss the live database.
+          bundle exec rails db:migrate
           systemctl restart counting
           systemctl is-active --quiet counting
           for attempt in $(seq 1 15); do
