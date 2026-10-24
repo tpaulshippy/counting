@@ -9,21 +9,22 @@ class Counter < ApplicationRecord
   broadcasts_to ->(_counter) { :counters }
 
   def up(user_id, comment = nil)
-    increment!(:number)
-    save
+    increment(:number)
+    save!
 
     history.create(change: 1, comment:, created_by: user_id)
   end
 
   def down(user_id, comment = nil)
-    decrement!(:number)
-    save
+    decrement(:number)
+    save!
 
     history.create(change: -1, comment:, created_by: user_id)
   end
 
   def reset(user_id, comment = nil)
-    update(number: 0)
+    self.number = 0
+    save!
 
     history.create(change: 0, comment:, created_by: user_id)
   end
