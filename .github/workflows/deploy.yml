@@ -30,7 +30,9 @@ jobs:
         run: |
           echo "$SSH_KEY" > /tmp/deploy_key
           chmod 600 /tmp/deploy_key
-          ssh -o StrictHostKeyChecking=no -i /tmp/deploy_key root@$SERVER_HOST '
+          ssh -o StrictHostKeyChecking=no -o ConnectTimeout=30 \
+            -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
+            -i /tmp/deploy_key root@$SERVER_HOST '
           set -euo pipefail
           export RBENV_ROOT="$HOME/.rbenv"
           export PATH="$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PATH"
